@@ -20,6 +20,7 @@ let
       pkgs.file
       pkgs.gh
       pkgs.micro
+      pkgs.powershell
     ];
 
 in {
