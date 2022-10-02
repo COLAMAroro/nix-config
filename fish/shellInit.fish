@@ -34,4 +34,6 @@ if set -q IS_NODE_ENV # We are in a NodeJS environment (exported in a shellHook 
     end
 end
 
+any-nix-shell fish --info-right | source
+
 end

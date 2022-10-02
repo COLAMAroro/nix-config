@@ -22,6 +22,7 @@ let
       pkgs.micro
       pkgs.powershell
       pkgs.rnix-lsp
+      pkgs.any-nix-shell
     ];
 
 in {
