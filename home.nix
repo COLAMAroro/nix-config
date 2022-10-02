@@ -57,7 +57,7 @@ in {
   	pall = "push --all";
   };
   programs.git.userEmail = "github@rondier.io";
-  programs.git.userName = "Corentin Rondier";
+  programs.git.userName = "COLAMAroro";
 
   home.sessionVariables = {
     EDITOR = "micro";
