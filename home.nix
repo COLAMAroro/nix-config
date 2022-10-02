@@ -7,6 +7,7 @@ let
       pkgs.discord
       pkgs.vscode
       pkgs.htop
+      pkgs.clip
     ]
     else [ # We *are* in WSL
       pkgs.wslu
@@ -52,6 +53,7 @@ in {
   programs.git.enable = true;
   programs.git.aliases = {
   	tree = "log --all --decorate --oneline --graph";
+  	pall = "push --all";
   };
   programs.git.userEmail = "github@rondier.io";
   programs.git.userName = "Corentin Rondier";
