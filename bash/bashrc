@@ -1,0 +1,2 @@
+[[ -v IS_NODE_ENV ]] && export PS1="(node) ${PS1:2}"
+export TESTVAR=2
