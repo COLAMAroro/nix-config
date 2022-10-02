@@ -15,11 +15,13 @@ if ! functions -q envsource # Make sure you have a function source .env files
 end
 
 if set -q PIPENV_ACTIVE # If somehow you are in a pipenv env, but it's only activated for back (fuck `pipenv shell` in nix-shells)
+    abbr -a -g pycovr coverage run --source="." manage.py test && coverage report
     . $(pipenv --venv)/bin/activate.fish # You want to activate if yourself for fish
     if test -e ".env"
         envsource ".env"
     end
 else if set -q VIRTUAL_ENV && test -e ./env/bin/activate.fish # We are still in a python environment, but not with pipenv, just vanilla venv
+    abbr -a -g pycovr coverage run --source="." manage.py test && coverage report
     . ./env/bin/activate.fish
     if test -e ".env"
         envsource ".env"
