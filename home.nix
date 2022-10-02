@@ -19,6 +19,7 @@ let
       pkgs.git
       pkgs.file
       pkgs.gh
+      pkgs.micro
     ];
 
 in {
@@ -57,4 +58,8 @@ in {
   };
   programs.git.userEmail = "github@rondier.io";
   programs.git.userName = "Corentin Rondier";
+
+  home.sessionVariables = {
+    EDITOR = "micro";
+  };
 }

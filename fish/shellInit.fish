@@ -1,6 +1,8 @@
 status --is-interactive; and begin # Make sure it's only run in interactive shell, it's mostly for nix-shells.
 # It could be ommited by using `programs.fish.interactiveShellInit` in home.nix
 
+set -gx EDITOR micro # extra fucky hack because fish doesn't get home.sessionVariables from home-manager
+
 if ! functions -q envsource # Make sure you have a function source .env files
     function envsource # https://gist.github.com/nikoheikkila/dd4357a178c8679411566ba2ca280fcc
         for line in (cat $argv | grep -v '^#' | grep -v '^\s*$')
