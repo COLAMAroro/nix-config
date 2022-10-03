@@ -1,13 +1,21 @@
 { config, pkgs, ... }:
 
 let
+	newNss = import (builtins.fetchTarball {
+	        url = "https://github.com/NixOS/nixpkgs/archive/7d7622909a38a46415dd146ec046fdc0f3309f44.tar.gz";
+	    }) {};
+	newDiscord = pkgs.discord.override {
+		nss = newNss.nss_latest;
+	};
     plateformSpecificPackages = if (builtins.match ".*WSL2.*" (builtins.readFile /proc/version )) == null
     then [# We are *not* in WSL
       pkgs.teams
-      pkgs.discord
+      newDiscord
       pkgs.vscode
       pkgs.htop
       pkgs.clip
+      pkgs.remmina
+      pkgs.libreoffice-fresh
     ]
     else [ # We *are* in WSL
       pkgs.wslu
@@ -23,6 +31,7 @@ let
       pkgs.powershell
       pkgs.rnix-lsp
       pkgs.any-nix-shell
+	  pkgs.bat
     ];
 
 in {
@@ -50,9 +59,11 @@ in {
 
   programs.fish.enable = true;
   programs.fish.shellInit = builtins.readFile ./fish/shellInit.fish;
+  programs.fish.shellAliases = {cat = "bat"; };
 
   programs.bash.enable = true;
   programs.bash.initExtra = ''source /home/cola/.config/nixpkgs/bash/bashrc'';
+  programs.bash.shellAliases = { cat = "bat"; };
 
   programs.git.enable = true;
   programs.git.aliases = {
