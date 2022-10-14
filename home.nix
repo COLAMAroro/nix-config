@@ -20,6 +20,9 @@ let
       pkgs.clip
       pkgs.remmina
       pkgs.libreoffice-fresh
+      pkgs.steamcmd
+      pkgs.steam-tui
+      pkgs.steam
     ]
     else [
       # We *are* in WSL
