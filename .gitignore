@@ -1,2 +1,3 @@
 stateVersion.nix
 smtpCredentials.nix
+bw.nix

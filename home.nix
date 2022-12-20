@@ -14,7 +14,7 @@ let
     then [
       # We are *not* in WSL
       pkgs.teams
-      newDiscord
+      pkgs.discord
       pkgs.vscode
       pkgs.htop
       pkgs.clip
@@ -23,6 +23,11 @@ let
       pkgs.steamcmd
       pkgs.steam-tui
       pkgs.steam
+      pkgs.vivaldi
+      pkgs.vivaldi-ffmpeg-codecs
+
+      pkgs.gnomeExtensions.dash-to-panel
+      pkgs.gnomeExtensions.night-theme-switcher
     ]
     else [
       # We *are* in WSL
@@ -39,8 +44,11 @@ let
     pkgs.rnix-lsp
     pkgs.any-nix-shell
     pkgs.bat
+    pkgs.unzip
+    pkgs.bitwarden-cli
+    pkgs.xclip
   ];
-
+  bwSecrets = builtins.import ./bw.nix;
 in
 {
   # Home Manager needs a bit of information about you and the
@@ -63,6 +71,16 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/shell".enabled-extensions = [
+        "dash-to-panel@jderose9.github.com"
+        "nightthemeswitcher-gnome-shell-extension@rmnvgr.gitlab.com"
+      ];
+    };
+  };
+
   home.packages = builtins.concatLists [ commonPackages plateformSpecificPackages ];
 
   programs.fish.enable = true;
@@ -73,6 +91,16 @@ in
   programs.bash.initExtra = ''source /home/cola/.config/nixpkgs/bash/bashrc'';
   programs.bash.shellAliases = { cat = "bat"; };
 
+  home.sessionVariables = {
+    MOZ_WAYLAND =
+      if (builtins.getEnv "XDG_SESSION_TYPE" == "wayland")
+      then 1 else 0;
+    EDITOR = "micro";
+    BW_CLIENTID = bwSecrets.id;
+    BW_CLIENTSECRET = bwSecrets.secret;
+    BW_PASSWORD = bwSecrets.password;
+  };
+
   programs.git.enable = true;
   programs.git.aliases = {
     tree = "log --all --decorate --oneline --graph";
@@ -82,10 +110,7 @@ in
   programs.git.userName = "COLAMAroro";
   programs.git.extraConfig = {
     sendemail = import ./smtpCredentials.nix;
+    init.defaultBranch = "main";
   };
   programs.git.package = pkgs.gitFull;
-
-  home.sessionVariables = {
-    EDITOR = "micro";
-  };
 }
