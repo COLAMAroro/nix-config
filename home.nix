@@ -83,10 +83,10 @@ rec {
       "org/gnome/desktop/wm/preferences".num-workspaces = 1;
       "org/gnome/desktop/wm/preferences".button-layout = "appmenu:minimize,maximize,close";
       "org/gnome/desktop/wm/keybindings" = {
-        switch-application = "@as []";
-        switch-application-backward = "@as []";
-        switch-windows = "['<Alt>Tab']";
-        switch-windows-backward = "['<Shift><Alt>Tab']";
+        switch-applications = "@as []";
+        switch-applications-backward = "@as []";
+        switch-windows = [ "<Alt>Tab" ];
+        switch-windows-backward = [ "<Shift><Alt>Tab" ];
       };
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         binding = "<Shift><Control>Escape";
@@ -133,7 +133,7 @@ rec {
       email = emailInfo.email;
       lock_timeout = 300;
       pinentry = "gnome3";
-      base_url = "vault.bitwarden.com";
+      base_url = "https://vault.bitwarden.com";
     };
   };
 
